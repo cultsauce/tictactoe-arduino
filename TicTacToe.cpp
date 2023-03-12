@@ -3,8 +3,6 @@
 
 TicTacToe::TicTacToe(Adafruit_SSD1306 *disp) {
   display = disp;
-  //display = new Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-  Serial.begin(9600);
   pinMode(SW, INPUT_PULLUP);
 }
 
@@ -211,16 +209,9 @@ int TicTacToe::minimax(bool is_maximizing, uint8_t depth, uint8_t &best_move) {
 }
 
 void TicTacToe::arduino_move () {
-  uint8_t pos = 255;
-  // for (uint8_t i = 0; i < 9; i++) {
-  //   if (board[i] != opponent && board[i] != player) {
-  //     board[i] = opponent;
-  //     break;
-  //   }
-  // }
+  uint8_t pos;
   minimax(true, 0, pos);
-  if (pos != 255)
-    board[pos] = opponent;
+  board[pos] = opponent;
   print_board ();
 }
 
@@ -247,8 +238,7 @@ void TicTacToe::win_animation (uint8_t win_pos_idx, uint8_t winner) {
 
 
 void TicTacToe::play () {
-  win_states[0] = 0; win_states[1] = 0; win_states[2] = 0;
-  //display->begin(SSD1306_SWITCHCAPVCC, I2C_ADDR); 
+  win_states[0] = 0; win_states[1] = 0; win_states[2] = 0; 
 
   loading_screen ();
   while (!input_changed ());
